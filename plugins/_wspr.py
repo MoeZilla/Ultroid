@@ -78,7 +78,6 @@ async def _(e):
             logi = await ultroid_bot(gu(id=query))
             name = logi.user.first_name
             ids = logi.user.id
-            username = logi.user.username
             mention = f"[{name}](tg://user?id={ids})"
             x = logi.user.status
             bio = logi.about
@@ -96,7 +95,7 @@ async def _(e):
                 status = "Can't Tell"
             text = f"**Name:**    `{name}`\n"
             text += f"**Id:**    `{ids}`\n"
-            if username:
+            if username := logi.user.username:
                 text += f"**Username:**    `{username}`\n"
                 url = f"https://t.me/{username}"
             else:
@@ -141,10 +140,7 @@ async def _(e):
             buddhhu.update({e.id: [logi.id, iuser]})
             snap.update({e.id: desc})
         except ValueError:
-            sur = e.builder.article(
-                title="Type ur msg",
-                text=f"You Didn't Type Your Msg",
-            )
+            sur = e.builder.article(title="Type ur msg", text="You Didn't Type Your Msg")
     await e.answer([sur])
 
 

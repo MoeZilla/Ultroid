@@ -45,11 +45,9 @@ async def set_time(e):
         return await eor(e, "Give Time in correct format")
     try:
         ok = e.text.split(maxsplit=1)[1].split()
-        if not len(ok) == 4:
+        if len(ok) != 4:
             return await eor(e, "Give Time in correct format")
-        tm = []
-        for x in ok:
-            tm.append(int(x))
+        tm = [int(x) for x in ok]
         udB.set("NIGHT_TIME", str(tm))
         await eor(e, "Setted time successfully")
     except BaseException:
@@ -58,8 +56,7 @@ async def set_time(e):
 
 @ultroid_cmd(pattern="addnm ?(.*)")
 async def add_grp(e):
-    pat = e.pattern_match.group(1)
-    if pat:
+    if pat := e.pattern_match.group(1):
         try:
             add_night((await bot.get_entity(pat)).id)
             return await eor(e, f"Done, Added {pat} To Night Mode.")
@@ -71,8 +68,7 @@ async def add_grp(e):
 
 @ultroid_cmd(pattern="remnm ?(.*)")
 async def rem_grp(e):
-    pat = e.pattern_match.group(1)
-    if pat:
+    if pat := e.pattern_match.group(1):
         try:
             rem_night((await bot.get_entity(pat)).id)
             return await eor(e, f"Done, Removed {pat} To Night Mode.")
@@ -89,10 +85,7 @@ async def rem_grp(e):
     for x in chats:
         try:
             ok = await ultroid_bot.get_entity(x)
-            if ok.username:
-                name += "@" + ok.username
-            else:
-                name += ok.title
+            name += "@" + ok.username if ok.username else ok.title
         except BaseException:
             name += str(x)
     await eor(e, name)

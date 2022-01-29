@@ -39,8 +39,7 @@ vcusername = tele_asst.me.username
 def VC_AUTHS():
     _vc_sudos = udB.get("VC_SUDOS").split() if udB.get("VC_SUDOS") else ""
     A_AUTH = [udB["OWNER_ID"], *sudoers(), *_vc_sudos]
-    AUTH = [int(x) for x in A_AUTH]
-    return AUTH
+    return [int(x) for x in A_AUTH]
 
 
 def reply_markup(chat_id: int):
