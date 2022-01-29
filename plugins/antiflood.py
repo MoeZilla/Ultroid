@@ -45,7 +45,7 @@ if Redis("ANTIFLOOD") is not (None or ""):
         count = 1
         chat = (await event.get_chat()).title
         if event.chat_id in _check_flood.keys():
-            if event.sender_id == [x for x in _check_flood[event.chat_id].keys()][0]:
+            if event.sender_id == list(_check_flood[event.chat_id].keys())[0]:
                 count = _check_flood[event.chat_id][event.sender_id]
                 _check_flood[event.chat_id] = {event.sender_id: count + 1}
             else:
@@ -105,8 +105,7 @@ async def setflood(e):
         return await eod(e, "`What?`")
     if not input.isdigit():
         return await eod(e, "`Invalid Input`")
-    m = set_flood(e.chat_id, input)
-    if m:
+    if m := set_flood(e.chat_id, input):
         return await eod(
             e, f"`Successfully Updated Antiflood Settings to {input} in this chat.`"
         )
@@ -134,7 +133,6 @@ async def remove_flood(e):
     ignore_dualmode=True,
 )
 async def getflood(e):
-    ok = get_flood_limit(e.chat_id)
-    if ok:
+    if ok := get_flood_limit(e.chat_id):
         return await eod(e, f"`Flood limit for this chat is {ok}.`")
     await eod(e, "`No flood limits in this chat.`")

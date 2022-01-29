@@ -49,11 +49,10 @@ async def an(e):
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await eod(x, "`Unsupported Media`")
-            else:
-                dl = await wt.download_media()
-                variable = uf(dl)
-                os.remove(dl)
-                m = "https://telegra.ph" + variable[0]
+            dl = await wt.download_media()
+            variable = uf(dl)
+            os.remove(dl)
+            m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:
@@ -79,8 +78,7 @@ async def rn(e):
 
 @ultroid_cmd(pattern="listnote$", admins_only=True)
 async def lsnote(e):
-    x = list_note(e.chat_id)
-    if x:
+    if x := list_note(e.chat_id):
         sd = "Notes Found In This Chats Are\n\n"
         await eor(e, sd + x)
     else:
@@ -94,12 +92,10 @@ async def notes(e):
         return
     xx = (xx.replace("#", "")).lower()
     chat = e.chat_id
-    x = get_notes(int(chat))
-    if x:
+    if x := get_notes(int(chat)):
         if " " in xx:
             xx = xx.split(" ")[0]
-        k = get_reply(chat, xx)
-        if k:
+        if k := get_reply(chat, xx):
             msg = k["msg"]
             media = k["media"]
             await e.reply(msg, file=media)

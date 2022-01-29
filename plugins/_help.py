@@ -15,8 +15,7 @@ from . import *
 
 @ultroid_cmd(pattern="help ?(.*)")
 async def _help(ult):
-    plug = ult.pattern_match.group(1)
-    if plug:
+    if plug := ult.pattern_match.group(1):
         try:
             if plug in HELP:
                 output = f"**Plugin** - `{plug}`\n"
